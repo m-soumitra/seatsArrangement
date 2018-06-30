@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="input-group mb-3">
+    <div class="custom-file">
+      <input type="file" class="custom-file-input" id="inputGroupFile" (change)="fileChange($event)">
+      <label class="custom-file-label" for="inputGroupFile" accept=".csv">{{selectedFileName}}</label>
+    </div>
+    <div class="input-group-append">
+      <span class="input-group-text" id="">Upload</span>
+    </div>
+  </div>
+  <table>
+    <tbody>
+      <tr *ngFor="let rowOfSeats of seats">
+        <td *ngFor="let seat of rowOfSeats; let i = index">
+          <button *ngIf="seat.id && seat.id.trim() !== '' && seat.occupancy == 'S'" type="button" class="btn btn-outline-danger" title="{{seat.project}}">{{seat.id}}</button>
+          <button *ngIf="seat.id && seat.id.trim() !== '' && seat.occupancy == 'NS'" type="button" [ngClass]="seat.currentlySelected ? 'btn btn-info' : 'btn btn-outline-success'"
+            (click)="selectDeselectAvailableSeats(seat)">{{seat.id}}</button>
+          <button *ngIf="seat.id && seat.id.trim() !== '' && seat.occupancy == 'D'" type="button" class="btn btn-outline-secondary"
+            disabled>{{seat.id}}</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="selectedSeats && selectedSeats.length > 0" class="alert alert-info" role="alert">
+    {{selectedSeats.length}} seats selected
+  </div>
+</div>
