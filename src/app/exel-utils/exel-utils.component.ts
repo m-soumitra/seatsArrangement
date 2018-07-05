@@ -1,3 +1,4 @@
+import { TemplateSaveService } from './../providers/services/template-save.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -12,7 +13,7 @@ export class ExelUtilsComponent implements OnInit {
   public seats: Array<Array<Seat>> = new Array<Array<Seat>>();
   public selectedSeats: Array<Seat> = new Array<Seat>();
 
-  constructor() { }
+  constructor(private _templateSaveService: TemplateSaveService) { }
 
   ngOnInit() {
   }
@@ -37,6 +38,7 @@ export class ExelUtilsComponent implements OnInit {
           }
         }
         console.log(this.seats);
+        this._templateSaveService.saveTemplateService(this.seats).subscribe(result => console.log('Done'));
       };
     }
   }
@@ -66,13 +68,13 @@ export class ExelUtilsComponent implements OnInit {
 }
 
 class Seat {
-  id: string;
+  seatNbr: string;
   occupancy: string;
   project: string;
   currentlySelected: boolean;
 
-  constructor(id: string, occupancy: string, project: string) {
-    this.id = id;
+  constructor(seatNbr: string, occupancy: string, project: string) {
+    this.seatNbr = seatNbr;
     this.occupancy = occupancy;
     this.project = project;
     this.currentlySelected = false;
